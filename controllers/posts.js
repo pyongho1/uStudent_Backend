@@ -10,6 +10,15 @@ const index = async (req, res) => {
   }
 };
 
+const show = async (req, res) => {
+  try {
+    const post = await Post.findById(req.params.id);
+    res.status(200).json(post);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+};
+
 const create = async (req, res) => {
   try {
     req.body.author = req.user.profile;
@@ -29,4 +38,4 @@ const create = async (req, res) => {
   }
 };
 
-export { index, create };
+export { index, create, show };
