@@ -4,9 +4,9 @@ const Schema = mongoose.Schema;
 
 const postSchema = new Schema(
   {
-    name: String,
-    tasty: Boolean,
-    owner: { type: Schema.Types.ObjectId, ref: "Profile" },
+    title: String,
+    content: String,
+    author: { type: Schema.Types.ObjectId, ref: "Profile" },
   },
   {
     timestamps: true,

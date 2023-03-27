@@ -6,6 +6,7 @@ const router = Router();
 
 /*---------- Public Routes ----------*/
 router.get("/", postCtrl.index);
+router.post("/", postCtrl.create);
 
 /*---------- Protected Routes ----------*/
 router.use(decodeUserFromToken);
