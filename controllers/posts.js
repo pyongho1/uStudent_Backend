@@ -45,9 +45,9 @@ const deletePost = async (req, res) => {
     const post = await Post.findById(req.params.id);
     if (post.author.equals(req.user.profile)) {
       const posts = await Post.findByIdAndDelete(req.params.id);
-      // const profile = await Profile.findById(req.user.profile);
-      // profile.posts.remove({ _id: req.params.id });
-      // await profile.save();
+      const profile = await Profile.findById(req.user.profile);
+      profile.posts.remove({ _id: req.params.id });
+      await profile.save();
       res.status(200).json(posts);
     } else {
       res
@@ -59,4 +59,22 @@ const deletePost = async (req, res) => {
   }
 };
 
-export { index, create, show, deletePost as delete };
+const update = async (req, res) => {
+  try {
+    const post = await Post.findById(req.params.id);
+    if (post.author.equals(req.user.profile)) {
+      const posts = await Post.findByIdAndUpdate(req.params.id, req.body, {
+        new: true,
+      });
+      res.status(200).json(posts);
+    } else {
+      res
+        .status(401)
+        .json("Not Authorized: User does not match emotionPost.author");
+    }
+  } catch (error) {
+    res.status(500).json(error);
+  }
+};
+
+export { index, create, show, deletePost as delete, update };
